@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Untuk Kaafi</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff0f5;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 20px;
+    }
+    .hidden { display: none; }
+    .btn {
+      background-color: #ff85a2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      background-color: #ff5e85;
+    }
+    .message-line {
+      opacity: 0;
+      transition: opacity 0.8s;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .final {
+      font-size: 24px;
+      color: #d6336c;
+      font-weight: bold;
+      margin-top: 40px;
+      animation: fadeIn 2s ease-in forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="page1">
+      <h2>Hai <span id="sayang">Kaafi</span>...</h2>
+      <p>Kalila mau bilang sesuatu, tapi pelan-pelan ya...</p>
+      <button class="btn" onclick="showPage(2)">Lanjut</button>
+    </div><div id="page2" class="hidden">
+  <p>Sebelum itu...</p>
+  <p><span id="sayang2">Kaafi</span>, kamu kangen aku ngga?  😕</p>
+  <p>(Pilih jujur ya!! nda leh boong 😤)</p>
+  <button class="btn" onclick="showPage(3)">Iya, kangen banget kok 🥰</button>
+</div>
+
+<div id="page3" class="hidden">
+  <p>Hehe...</p>
+  <p>Kalila juga kangen banget.</p>
+  <p>Dan bukan cuma itu...</p>
+  <p>Kalila kangen <strong>dan</strong> sayang <span id="sayang3">Kaafi</span> 💗</p>
+  <p>(100% real, no tipu tipu ✋)</p>
+  <button class="btn" onclick="showPage(4)">Lanjut lagiii~</button>
+</div>
+
+<div id="page4" class="hidden">
+  <div id="message"></div>
+  <div class="final hidden" id="finalMsg">I love you, <span id="sayang4">Kaafi Asyaukani</span> 💗</div>
+</div>
+
+  </div>  <script>
+    const messages = [
+      "Kalila cuma mau bilang...",
+      "Jangan terlalu capek ya. Aku tahu kamu lagi banyak hal yang harus dikerjain, dan aku jelas bangga banget punya kamu.",
+      "Tapi jujur...",
+      "Aku kangen banget sama kamu. Setiap hari.",
+      "Aku ngga butuh banyak hal... cukup kamu sehat, bahagia, dan inget kalau ada Kalila yang sayang kamu.",
+      "Makasih ya udah jadi bagian dari hari-hari Kalila 🤍"
+    ];
+
+    let currentPage = 1;
+
+    function showPage(page) {
+      document.getElementById(`page${currentPage}`).classList.add('hidden');
+      document.getElementById(`page${page}`).classList.remove('hidden');
+      currentPage = page;
+      if (page === 4) showMessages();
+    }
+
+    function showMessages() {
+      const container = document.getElementById("message");
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i >= messages.length) {
+          clearInterval(interval);
+          document.getElementById("finalMsg").classList.remove("hidden");
+          return;
+        }
+        const p = document.createElement("p");
+        p.className = "message-line";
+        p.textContent = messages[i];
+        container.appendChild(p);
+        setTimeout(() => p.style.opacity = 1, 100);
+        i++;
+      }, 1800);
+    }
+
+    // Ambil nama dari URL
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("sayang") || "Kaafi";
+    document.querySelectorAll("#sayang, #sayang2, #sayang3").forEach(el => el.textContent = name);
+    document.getElementById("sayang4").textContent = name + " Asyaukani";
+  </script></body>
+</html>
